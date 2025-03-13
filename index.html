@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+    <script type="text/javascript" charset="utf-8">
+        (function (w, d, t, f) {
+            w[f] = w[f] || function (c, k, n) {
+                s = w[f], k = s['k'] = (s['k'] || (k ? ('&k=' + k) : '')); s['c'] =
+                    c = (c instanceof Array) ? c : [c]; s['n'] = n = n || 0; L = d.createElement(t), e = d.getElementsByTagName(t)[0];
+                L.async = 1; L.src = '//feed.aqicn.org/feed/' + (c[n].city) + '/' + (c[n].lang || '') + '/feed.v1.js?n=' + n + k;
+                e.parentNode.insertBefore(L, e);
+            };
+        })(window, document, 'script', '_aqiFeed');    
+    </script>
+
+</head>
+
+<body>
+
+
+    <div id="mapState" class="mapContainer mapContainer2">
+        <div id="map"></div>
+    </div>
+    <div class="container">
+        <div id="info-pm25" class="sidebarHidden sidebarShow">
+            <h1>PM2.5</h1>
+            <div class="health">
+                <h2>Health Effects</h2>
+                <p>
+                    PM2.5 consists of tiny particles (smaller than 2.5 micrometers in diameter) that can deeply
+                    penetrate the respiratory system and enter the bloodstream.
+                    Exposure can cause lung inflammation, bronchitis, asthma exacerbation, and decreased lung function.
+                    Long-term exposure increases the risk of chronic obstructive pulmonary disease (COPD), lung cancer,
+                    cardiovascular diseases (heart attacks, strokes), and premature death.
+                </p>
+            </div>
+            <div class="climate">
+                <h2>Climate Impacts</h2>
+                <p>
+                    PM2.5 can alter cloud formation and precipitation patterns, impacting local weather.
+                    Some PM2.5 particles, like black carbon (soot), absorb sunlight and contribute to warming,
+                    accelerating ice melt in polar regions.
+                    Other PM2.5 components, such as sulfates and nitrates, reflect sunlight and can have a temporary
+                    cooling effect.
+                    Overall, PM2.5 impacts climate in complex ways, depending on its composition and location.
+                </p>
+            </div>
+        </div>
+        <div id="info-o3" class="sidebarHidden sidebarShow">
+            <h1>Ozone</h1>
+            <div class="health">
+                <h2>Health Effects</h2>
+                <p>
+                    Ozone is a highly reactive gas that damages lung tissue and reduces lung function.
+                    Short-term exposure causes throat irritation, coughing, chest tightness, and difficulty breathing.
+                    Long-term exposure increases the risk of chronic respiratory diseases like asthma and COPD.
+                    Ozone can also increase susceptibility to lung infections and worsen pre-existing heart conditions.
+                </p>
+            </div>
+            <div class="climate">
+                <h2>Climate Impacts</h2>
+                <p>
+                    Ozone is a short-lived greenhouse gas that traps heat in the atmosphere, contributing to global
+                    warming.
+                    Unlike CO₂, which remains in the atmosphere for centuries, ozone has a shorter lifespan but a strong
+                    warming potential.
+                    It also harms vegetation and reduces crop yields, negatively impacting food security.
+                    Ozone exposure can damage forests, leading to ecosystem disruptions.
+                </p>
+            </div>
+        </div>
+        <div id="info-no2" class="sidebarHidden sidebarShow">
+            <h1>Nitrogen Dioxide</h1>
+            <div class="health">
+                <h2>Health Effects</h2>
+                <p>
+                    NO₂ is a toxic gas that primarily affects the respiratory system.
+                    Short-term exposure can cause throat irritation, coughing, and reduced lung function.
+                    Long-term exposure is linked to chronic respiratory diseases such as asthma, bronchitis, and chronic
+                    obstructive pulmonary disease (COPD).
+                    NO₂ increases susceptibility to lung infections by weakening the immune system's defenses.
+
+                </p>
+            </div>
+            <div class="climate">
+                <h2>Climate Impacts</h2>
+                <p>
+                    NO₂ is a precursor to ground-level ozone and fine particulate matter (PM2.5), both of which
+                    contribute to air pollution and climate change.
+                    It plays a role in the formation of acid rain, which harms forests, aquatic life, and
+                    infrastructure.
+                    NO₂ contributes to haze and smog, reducing visibility and worsening urban air quality.
+                    While NO₂ itself is not a major greenhouse gas, nitrous oxide (N₂O), another nitrogen oxide, is a
+                    potent greenhouse gas with 300 times the warming potential of CO₂.
+                </p>
+            </div>
+        </div>
+        <div id="info-so2" class="sidebarHidden sidebarShow">
+            <h1>Sulfur Dioxide</h1>
+            <div class="health">
+                <h2>Health Effects</h2>
+                <p>
+                    SO₂ is a highly irritating gas that affects the respiratory system, causing wheezing, shortness of
+                    breath, and throat irritation.
+                    It triggers asthma attacks and increases the risk of lung infections.
+                    SO₂ exposure can lead to inflammation of the airways, bronchitis, and decreased lung function.
+                    Long-term exposure contributes to chronic respiratory diseases and heart conditions.
+                </p>
+            </div>
+            <div class="climate">
+                <h2>Climate Impacts</h2>
+                <p>
+                    SO₂ reacts in the atmosphere to form sulfate aerosols, which reflect sunlight and cool the Earth's
+                    surface.
+                    However, sulfate aerosols also contribute to acid rain, which damages forests, harms aquatic life,
+                    and degrades buildings and infrastructure.
+                    SO₂ emissions from coal burning can lead to severe regional air pollution issues, such as smog and
+                    haze.
+                </p>
+            </div>
+        </div>
+        <div id="info-co" class="sidebarHidden sidebarShow">
+            <h1>Carbon Monoxide</h1>
+            <div class="health">
+                <h2>Health Effects</h2>
+                <p>
+                    CO is a colorless, odorless gas that binds to hemoglobin in red blood cells, reducing the blood's
+                    ability to carry oxygen.
+                    Low-level exposure can cause headaches, dizziness, nausea, and confusion.
+                    High exposure levels can lead to loss of consciousness, organ damage, and death (carbon monoxide
+                    poisoning).
+                    Chronic exposure increases the risk of heart diseases and neurological damage.
+                </p>
+            </div>
+            <div class="climate">
+                <h2>Climate Impacts</h2>
+                <p>
+                    CO is not a direct greenhouse gas, but it indirectly contributes to global warming by reacting with
+                    hydroxyl radicals (OH), reducing their ability to break down methane (a potent greenhouse gas).
+                    Also, Elevated CO levels lead to the formation of ground-level ozone, worsening air pollution.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button id="composite">Composite</button>
+        <button id="pm25">PM2.5</button>
+        <button id="o3">Ozone</button>
+        <button id="no2">Nitrogen Dioxide</button>
+        <button id="so2">Sulfur Dioxide</button>
+        <button id="co">Carbon Monoxide</button>
+        <button id="locateUser">Your Location</button>
+    </div>
+
+
+    <!-- <div id="legend-full-x"> <table class="infoaqitable cautionary"> 
+            <thead> 
+                <tr> <td>AQI</td> <td>Air Pollution Level</td> <td>Health Implications</td> <td>Cautionary Statement (for PM2.5)</td> </tr> 
+            </thead> 
+            <tbody>
+                <tr style="background-color:#009966;"> 
+                <td class="aqiwtxt" nowrap="true">0 - 50</td> 
+                <td class="aqiwtxt">Good</td> <td class="aqiwtxt">Air quality is considered satisfactory, and air pollution poses little or no risk</td> 
+                <td class="aqiwtxt">None</td> </tr> <tr style="background-color:#ffde33" class="aqibtxt"> <td class="aqibtxt" nowrap="true">51 -100</td> <td class="aqibtxt">Moderate</td> <td class="aqibtxt">Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.</td> <td class="aqibtxt">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</td> </tr> <tr style="background-color:#ff9933;"> <td class="aqibtxt" nowrap="true">101-150</td> <td class="aqibtxt">Unhealthy for Sensitive Groups</td> <td class="aqibtxt">Members of sensitive groups may experience health effects. The general public is not likely to be affected.</td> <td class="aqibtxt">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</td> </tr> <tr style="background-color:#cc0033;"> <td class="aqiwtxt" nowrap="true">151-200</td> <td class="aqiwtxt">Unhealthy</td> <td class="aqiwtxt">Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects</td> <td class="aqiwtxt">Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor exertion; everyone else, especially children, should limit prolonged outdoor exertion</td> </tr> <tr style="background-color:#660099;"> <td class="aqiwtxt" nowrap="true">201-300</td> <td class="aqiwtxt">Very Unhealthy</td> <td class="aqiwtxt">Health warnings of emergency conditions. The entire population is more likely to be affected.</td> <td class="aqiwtxt">Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion.</td> </tr> <tr style="background-color:#7e0023;"> <td class="aqiwtxt" nowrap="true">300+</td> <td class="aqiwtxt">Hazardous</td> <td class="aqiwtxt">Health alert: everyone may experience more serious health effects</td> <td class="aqiwtxt">Everyone should avoid all outdoor exertion</td> </tr> </tbody></table></div>
+        
+        <span  id="city-aqi-container"></span>   -->
+
+
+
+</body>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="script.js"></script>
+
+</html>
