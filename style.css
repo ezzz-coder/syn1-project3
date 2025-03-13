@@ -113,20 +113,24 @@ table{
     border: solid, medium, white;
     border-radius: 10%;
     width: 80%;
+    height: 35%;
 }
 
 .health p{
     padding: 10px;
+    font-size: 1vw;;
 }
 
 .climate{
     margin: auto;
-    margin-top: 50px;
+    margin-top: 5%;
     border: solid, medium, white;
     border-radius: 10%;
     width: 80%;
+    height: 40%
 }
 
 .climate p{
     padding: 10px;
+    font-size: 1vw;
 }
